@@ -25,7 +25,7 @@
     "require-dev": {
         "codeception/codeception": "^4.1",
         "codeception/phpbuiltinserver": "*",
-        "helhum/typo3-console": "^6.0",
+        "helhum/typo3-console": "^8.1",
         "codeception/module-rest": "^1.0.0",
         "codeception/module-phpbrowser": "^1.0.0"
     },
