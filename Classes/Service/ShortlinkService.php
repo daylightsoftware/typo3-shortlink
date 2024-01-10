@@ -188,14 +188,14 @@ class ShortlinkService
             )->execute()->fetch();
 
         // check if we got something, otherwise throw exception
-        if (empty($row)) {
-            throw new NoSuchShortlinkException('Shortlink Not Found '.$shortlink, 1591368921);
-        }
+//        if (empty($row)) {
+//            throw new NoSuchShortlinkException('Shortlink Not Found '.$shortlink, 1591368921);
+//        }
 
         // Check if the record was stored with a user, and if
         // it did check with the userid in the object. If it
         // doesn't match, throw exception
-        if ($row['feuser'] > 0 && $this->feuser!==$row['feuser']) {
+        if (($row['feuser'] ?? 0) > 0 && $this->feuser !== ($row['feuser'] ?? 0)) {
             throw new ShortlinkPermissionDeniedException('Shortlink user missmatch', 1591382868);
         }
         if ($this->confArr['updateTimestamp'] === "1") {
@@ -205,7 +205,7 @@ class ShortlinkService
                     $query->expr()->eq('shortlink', $query->createNamedParameter($shortlink))
                 )->execute();
         }
-        return $row['redirectto'];
+        return $row['redirectto'] ?? '/'.$shortlink;
     }
 
     /**
