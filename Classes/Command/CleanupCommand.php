@@ -45,7 +45,7 @@ class CleanupCommand extends Command
             $queryBuilder->delete('tx_shortcutlink_domain_model_shortlink')
                 ->where(
                     $queryBuilder->expr()->lt('tstamp', $queryBuilder->createNamedParameter($olderThanStamp))
-                )->execute();
+                )->executeStatement();
         } catch (Exception $e) {
             return 1;
         }

@@ -74,16 +74,16 @@ class RedirectMiddleware implements MiddlewareInterface
             /** @var ShortlinkService $shortLink */
             $shortLink = GeneralUtility::makeInstance(ShortlinkService::class);
 
-
+//          deactivated on upgrade for TYPO3 V12, have to be refactored if needed
             // we have to do a prelimenary authentication here..
-            /** @var FrontendUserAuthentication $frontendUser */
-            $frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
-            $frontendUser->start();
-
-            if (($frontendUser->user[$frontendUser->userid_column ?? 'uid'] ?? 0) > 0) {
-                // is logged in, set user
-                $shortLink->setFeuser($frontendUser->user[$frontendUser->userid_column ?? 'uid']);
-            }
+//            /** @var FrontendUserAuthentication $frontendUser */
+//            $frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
+//            $frontendUser->start();
+//
+//            if (($frontendUser->user[$frontendUser->userid_column ?? 'uid'] ?? 0) > 0) {
+//                // is logged in, set user
+//                $shortLink->setFeuser($frontendUser->user[$frontendUser->userid_column ?? 'uid']);
+//            }
 
             /** @var Response $response */
             $response = GeneralUtility::makeInstance(Response::class);
