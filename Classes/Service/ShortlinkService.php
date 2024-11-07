@@ -114,7 +114,7 @@ class ShortlinkService
                     'redirectto'=>$this->url,
                     'tstamp'=>time(),
                     'feuser'=>$this->feuser
-                ])->execute();
+                ])->executeStatement();
 
             $uid = $query->getConnection()->lastInsertId();
             $base62 = new Base62();
@@ -124,7 +124,7 @@ class ShortlinkService
                 ->set('shortlink', $shortlink)
                 ->where(
                     $query->expr()->eq('uid', $query->createNamedParameter($uid))
-                )->execute();
+                )->executeStatement();
         }
         return (string)$shortlink;
     }
@@ -142,7 +142,7 @@ class ShortlinkService
             ->from(self::$TABLENAME)
             ->where(
                 $query->expr()->eq('checksum', $query->createNamedParameter($checksum))
-            )->execute()->fetch();
+            )->executeQuery()->fetchAssociative();
 
         if (empty($row)) {
             $query->update(self::$TABLENAME)
@@ -151,7 +151,7 @@ class ShortlinkService
             ->set('feuser', (int)$this->feuser)
             ->where(
                 $query->expr()->eq('shortlink', $query->createNamedParameter($shortlink))
-            )->execute();
+            )->executeStatement();
         }
     }
 
@@ -168,7 +168,7 @@ class ShortlinkService
 
             ->where(
                 $query->expr()->eq('shortlink', $query->createNamedParameter($shortlink))
-            )->execute();
+            )->executeStatement();
     }
     /**
      * @param string $shortlink
@@ -185,7 +185,7 @@ class ShortlinkService
             ->from(self::$TABLENAME)
             ->where(
                 $query->expr()->eq('shortlink', $query->createNamedParameter($shortlink))
-            )->execute()->fetch();
+            )->executeQuery()->fetchAssociative();
 
         // check if we got something, otherwise throw exception
 //        if (empty($row)) {
@@ -203,7 +203,7 @@ class ShortlinkService
                 ->set('tstamp', time())
                 ->where(
                     $query->expr()->eq('shortlink', $query->createNamedParameter($shortlink))
-                )->execute();
+                )->executeStatement();
         }
         return $row['redirectto'] ?? '/'.$shortlink;
     }
