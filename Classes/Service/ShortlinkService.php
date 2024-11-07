@@ -102,7 +102,7 @@ class ShortlinkService
             ->from(self::$TABLENAME)
             ->where(
                 $query->expr()->eq('checksum', $query->createNamedParameter($checksum))
-            )->execute()->fetch();
+            )->executeQuery()->fetchAssociative();
 
         if (!empty($row)) {
             $shortlink = $row['shortlink'];
